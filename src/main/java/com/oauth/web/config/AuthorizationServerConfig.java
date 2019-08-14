@@ -17,7 +17,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Autowired
     private AuthenticationManager authenticationManager;
-
+    //AuthenticationManager: The Spring's authentication manager takes care of checking user credential validity
     @SuppressWarnings("unused")
 	@Autowired
     private PasswordEncoder passwordEncoder;
