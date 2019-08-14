@@ -1,0 +1,605 @@
+{
+	"info": {
+		"_postman_id": "99b7b758-9fe1-4fac-ae8b-f296f01ae9c1",
+		"name": "UserDetails",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Save User Details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "602a6e20-ade7-4f62-befc-9c23a1f11078",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"Created\");",
+							"});",
+							"",
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+							"});",
+							"",
+							"",
+							"var jsonData=JSON.parse(responseBody);",
+							"pm.environment.set(\"ID\", jsonData.id);",
+							"pm.environment.set(\"NAME\", jsonData.username);",
+							"pm.environment.set(\"KEY\", jsonData.activationKey);",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"username\": \"sciits\",\r\n\t\"password\":\"4321\",\r\n\t\"email\": \"anil@gmail.com\",\r\n\t\"phone\": \"8792263430\",\r\n\t\"city\": \"Bangalore\",\r\n\t\"state\": \"Karnataka\",\r\n\t\"pinCode\": \"560100\",\r\n\t\"roles\":[\"User\"]\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9000/user/adduser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"user",
+						"adduser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Details login with Name and password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9860e2a3-4dee-49bd-a329-dc66005bd82b",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"",
+							"var jsonData=JSON.parse(responseBody);",
+							"pm.environment.set(\"token\", jsonData.access_token);",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "sciits",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "secret",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "{{NAME}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "4321",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:9000/oauth/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Password Using Name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "19b40902-c997-45e8-9227-5b40ba03c205",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"username\": \"{{NAME}}\",\r\n\t\"password\": \"hari\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9000/user/setpassword",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"user",
+						"setpassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User With Username and Activation Key",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0432c5bc-70b6-415a-96be-2fe4e74af9d3",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer {{token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:9000/user/activate/{{NAME}}/{{KEY}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"user",
+						"activate",
+						"{{NAME}}",
+						"{{KEY}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Of User Details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7502a17d-3629-4cd3-918c-a57ab37efa91",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"name\": \"anil\",\r\n\t\"email\": \"anil@gmail.com\",\r\n\t\"phone\": \"987654321\",\r\n\t\"city\": \"Hyderabad\",\r\n\t\"state\": \"TS\",\r\n\t\"pinCode\": \"560090\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9000/user/listofusers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"user",
+						"listofusers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Details By ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2629d958-8c2a-494c-ad76-f4e42d8379f0",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"name\": \"anil\",\r\n\t\"email\": \"anil@gmail.com\",\r\n\t\"phone\": \"987654321\",\r\n\t\"city\": \"Hyderabad\",\r\n\t\"state\": \"TS\",\r\n\t\"pinCode\": \"560090\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9000/user/getuserbyid/{{ID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"user",
+						"getuserbyid",
+						"{{ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Details By Name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1cce8590-43fc-4ca5-b321-e1a69b31961e",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9000/user/getuserbyname/{{NAME}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"user",
+						"getuserbyname",
+						"{{NAME}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User Details By ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d6809aa0-bd66-4595-9eaf-5d39f24849c9",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"sunil\",\n    \"city\": \"ATP\",\n    \"state\": \"AP\",\n    \"id\":2\n\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9000/user/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"user",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User Details By ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6e2c1590-cb88-4e7d-9bc8-405b18dceaa2",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Status code is 410\", function () {",
+							"    pm.response.to.have.status(410);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"Gone\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9000/user/delete/{{ID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"user",
+						"delete",
+						"{{ID}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
